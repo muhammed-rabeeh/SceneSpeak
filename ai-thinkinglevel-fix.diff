@@ -1,0 +1,14 @@
+--- a/src/services/ai.ts
++++ b/src/services/ai.ts
+@@
+-import { GoogleGenAI } from '@google/genai';
++import { GoogleGenAI, ThinkingLevel } from '@google/genai';
+@@
+- const response=await withTimeout(ai.models.generateContent({model,contents:prompt,config:{maxOutputTokens:outputLimit,responseMimeType:'application/json',thinkingConfig:{thinkingLevel:'low'}}}));
++ const response=await withTimeout(ai.models.generateContent({model,contents:prompt,config:{maxOutputTokens:outputLimit,responseMimeType:'application/json',thinkingConfig:{thinkingLevel:ThinkingLevel.LOW}}}));
+@@
+-  config:{thinkingConfig:{thinkingLevel:'low'}},
++  config:{thinkingConfig:{thinkingLevel:ThinkingLevel.LOW}},
+@@
+-  config:{maxOutputTokens:2048,thinkingConfig:{thinkingLevel:'low'}},
++  config:{maxOutputTokens:2048,thinkingConfig:{thinkingLevel:ThinkingLevel.LOW}},

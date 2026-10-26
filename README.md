@@ -1,27 +1,29 @@
-# SceneSpeak AI connection-test and response fix
+# SceneSpeak AI TypeScript Build Fix
 
-This update changes Gemini's **Test connection** action to use a plain-text reply check instead of requiring a JSON response. It also shows a clearer message when Gemini returns no visible text or indicates the response was blocked.
+This patch fixes the TypeScript errors from the Netlify build:
 
-It also sets low reasoning effort for the app's short Gemini tasks and raises hard output-token limits so internal reasoning is less likely to consume the entire response budget before visible JSON is returned. The generated lesson, roleplay, tutor and speaking activities still request structured JSON because those features need specific fields.
+`Type '"low"' is not assignable to type 'ThinkingLevel | undefined'. Did you mean 'ThinkingLevel.LOW'?`
 
-## Update using your phone
+The app now imports `ThinkingLevel` from `@google/genai` and uses `ThinkingLevel.LOW` at each of the three `thinkingConfig` call sites.
 
-1. Download and extract this kit.
-2. Open the existing SceneSpeak repository on GitHub.
-3. Replace these root-level files with the matching files from this kit:
+## Update from a phone
+
+1. Extract this kit on your phone if your file manager supports ZIP extraction.
+2. Open the existing GitHub repository `muhammed-rabeeh/SceneSpeak`.
+3. Replace these repository-root files with those in this kit:
    - `SceneSpeakMinnaN5-JSON-Import.zip`
    - `build-netlify.sh`
    - `netlify.toml`
    - `.gitignore`
-4. Commit the replacement files to `main`.
-5. Open Netlify → Deploys and wait for the deployment to finish. If needed, use **Clear cache and deploy site**.
-6. Close old SceneSpeak tabs and reload the site. Go to Profile → AI provider, choose a model, and try **Test connection** again.
+4. Commit the changes to `main`.
+5. Open Netlify → Deploys and wait for the new deploy. If no deploy starts, trigger **Clear cache and deploy site**.
 
-The `netlify.toml` and `build-netlify.sh` must stay paired because the project source is stored inside the ZIP at repository root.
+Keep the build script and TOML together: Netlify extracts the app ZIP and builds the extracted `SceneSpeakApp` folder.
 
-## Notes
+## Scope
 
-- This fix does not need a server or Supabase changes.
-- Keep your Gemini API key out of GitHub files. Enter it inside SceneSpeak's AI settings only.
-- A successful connection test confirms Gemini can return text for the selected model. If a generation activity still fails, share its exact error from the app.
-- The updated source archive excludes `node_modules`, build output, and Git metadata.
+This is a compile fix only. It does not change your learning data, Supabase schema, or Gemini API key. Continue entering your Gemini key in SceneSpeak's settings; never commit it to GitHub.
+
+## Validation limits
+
+The source ZIP archive was generated and checked for integrity. A full `npm run build` could not be verified in this environment because `npm install` timed out; Netlify's next build will be the authoritative compilation check.
